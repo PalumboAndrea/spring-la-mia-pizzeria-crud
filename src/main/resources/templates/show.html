@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Home</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+	</head>
+	<body class="container-fluid">
+	
+		<div class="container">
+			
+			<div class="row">
+				<div class="col-6">
+					<h1>Nome:</h1>
+				</div>
+				
+				<div class="col-6">
+					<h2>[[ ${pizza.name} ]]</h2>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-6">
+					<h1>Descrizione:</h1>
+				</div>
+				
+				<div class="col-6">
+					<h2>[[ ${pizza.description} ]]</h2>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-6">
+					<h1>Prezzo:</h1>
+				</div>
+				
+				<div class="col-6">
+					<h2>[[ ${pizza.price} ]] euro</h2>
+				</div>
+			</div>
+		
+		</div>
+		
+		<img style="width: 400px;" alt="pizza" th:src="${pizza.imgUrl}">
+		
+	</body>
+</html>

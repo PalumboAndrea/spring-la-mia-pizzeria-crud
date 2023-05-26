@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Menu pizze</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+	</head>
+	<body>
+	
+		<h1 class="text-center">Menu pizze:</h1>
+		
+		<h2 th:if="${pizze.size() == 0}">Nessuna pizza trovata</h2>
+		
+		<ul th:if="${pizze != null}">
+			<li th:each="pizza : ${pizze}">
+				<a th:href="@{/pizze/{id} (id=${pizza.id})}">[[ ${pizza.name} ]]</a>
+			</li>
+		</ul>
+	 
+	</body>
+</html>
