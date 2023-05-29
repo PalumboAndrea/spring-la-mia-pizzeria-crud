@@ -41,7 +41,13 @@
 		
 		</div>
 		
-		<img style="width: 400px;" alt="pizza" th:src="${pizza.imgUrl}">
+		<div class="d-flex justify-content-center">
+			<img style="width: 400px;" alt="pizza" th:src="${pizza.imgUrl}">
+		</div>
+		
+		
+		
+		<a th:replace="fragments :: backHome()"></a>
 		
 	</body>
 </html>

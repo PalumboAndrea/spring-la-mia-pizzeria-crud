@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Pizza;
 import com.example.demo.PizzaService;
@@ -22,7 +25,6 @@ public class MyController {
 	public String homeView(Model model) {
 	
 		List<Pizza> pizze = pizzaService.findAll();
-		boolean noPizze = false;
 		
 		model.addAttribute("pizze", pizze);
 		
@@ -39,6 +41,32 @@ public class MyController {
 		model.addAttribute("pizza", pizza);
 		
 		return "show";
+	}
+	
+	@PostMapping("/pizze/by/name")
+	public String search(Model model,
+			@RequestParam(required = false) String name) {
+	
+		List<Pizza> pizze = pizzaService.findByName(name);
+		
+		model.addAttribute("pizze", pizze);
+		model.addAttribute("name", name);
+		
+		return "search";
+	}
+	
+	@GetMapping("/pizze/create")
+	public String createPizza() {
+		
+		return "create";
+	}
+	
+	@PostMapping("/pizze/create")
+	public String storePizzs(@ModelAttribute Pizza pizza) {
+		
+		pizzaService.save(pizza);
+		
+		return "redirect:/home";
 	}
 	
 	

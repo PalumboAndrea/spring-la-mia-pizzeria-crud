@@ -2,24 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>Menu pizze</title>
+		<title>Insert title here</title>
 		<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
 	</head>
 	<body class="container-fluid">
 	
 		<th:block th:replace="fragments :: searchForm()"></th:block>
 	
-		<h1 class="text-center">Menu pizze:</h1>
-		
 		<h2 th:if="${pizze.size() == 0}">Nessuna pizza trovata</h2>
 		
-		<ul th:if="${pizze != null}">
-			<li th:each="pizza : ${pizze}">
-				<a th:href="@{/pizze/{id} (id=${pizza.id})}">[[ ${pizza.name} ]]</a>
-			</li>
-		</ul>
+		<div th:if="${pizze != null}">
+			
+			<h2>Ecco le pizze che abbiamo trovato per te:</h2>
 		
-		<a th:href="@{/pizze/create}" class="btn btn-primary">Crea la tua pizza!</a>
+			<ul>
+				<li th:each="pizza : ${pizze}">
+					<a th:href="@{/pizze/{id} (id=${pizza.id})}">[[ ${pizza.name} ]]</a>
+				</li>
+			</ul>	
 		
+		</div>
+
+		<a th:replace="fragments :: backHome()"></a>
+	
 	</body>
 </html>
