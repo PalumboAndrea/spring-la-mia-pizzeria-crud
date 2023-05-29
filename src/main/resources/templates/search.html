@@ -11,7 +11,7 @@
 	
 		<h2 th:if="${pizze.size() == 0}">Nessuna pizza trovata</h2>
 		
-		<div th:if="${pizze != null}">
+		<div th:if="${pizze.size() != 0}">
 			
 			<h2>Ecco le pizze che abbiamo trovato per te:</h2>
 		
