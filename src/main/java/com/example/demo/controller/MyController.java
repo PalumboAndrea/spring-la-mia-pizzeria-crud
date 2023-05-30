@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Pizza;
 import com.example.demo.PizzaService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class MyController {
@@ -56,13 +60,29 @@ public class MyController {
 	}
 	
 	@GetMapping("/pizze/create")
-	public String createPizza() {
+	public String createPizza(Model model) {
+		
+		model.addAttribute("pizza", new Pizza());
 		
 		return "create";
 	}
 	
 	@PostMapping("/pizze/create")
-	public String storePizza(@ModelAttribute Pizza pizza) {
+	public String storePizza(
+			Model model,
+			@Valid @ModelAttribute Pizza pizza,
+			BindingResult bindingResult) {
+		
+		if (bindingResult.hasErrors()) {
+			
+			for (ObjectError err : bindingResult.getAllErrors()) 
+				System.err.println("error: " + err.getDefaultMessage());
+			
+			model.addAttribute("pizza", pizza);
+			model.addAttribute("errors", bindingResult);
+			
+			return "create";
+		}
 		
 		pizzaService.save(pizza);
 		
@@ -84,9 +104,22 @@ public class MyController {
 	
 	@PostMapping("/pizze/update/{id}")
 	public String updatePizza(
+			Model model,
 			@PathVariable int id,
-			@ModelAttribute Pizza pizza
+			@Valid @ModelAttribute Pizza pizza,
+			BindingResult bindingResult
 		) {
+		
+		if (bindingResult.hasErrors()) {
+			
+			for (ObjectError err : bindingResult.getAllErrors()) 
+				System.err.println("error: " + err.getDefaultMessage());
+			
+			model.addAttribute("pizza", pizza);
+			model.addAttribute("errors", bindingResult);
+			
+			return "update";
+		}
 		
 		pizza.setId(id);
 		pizzaService.save(pizza);

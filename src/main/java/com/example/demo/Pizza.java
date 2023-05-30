@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Pizza {
@@ -11,14 +13,19 @@ public class Pizza {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
+	@NotBlank(message = "Il nome non può essere vuoto")
 	private String name;
+	@NotBlank(message = "La descrizione non può essere vuota")
 	private String description;
+	@NotBlank(message = "Per favore inserire una foto")
 	private String imgUrl;
-	private float price;
+
+	@DecimalMin(value = "0.01", message = "Il prezzo deve essere maggiore di 0")
+	private double price;
 	
 	public Pizza() { }
-	public Pizza (String name, String description, String imgUrl, float price) {
+	public Pizza (String name, String description, String imgUrl, double price) {
 		
 		setName(name);
 		setDescription(description);
@@ -50,10 +57,10 @@ public class Pizza {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	
