@@ -15,9 +15,9 @@ public class PizzaService {
 		
 		return pizzaRepository.findAll();
 	}
-	public Pizza save(Pizza book) {
+	public Pizza save(Pizza pizza) {
 		
-		return pizzaRepository.save(book);
+		return pizzaRepository.save(pizza);
 	}
 	public Optional<Pizza> findById(int id) {
 		
@@ -27,5 +27,10 @@ public class PizzaService {
 	public List<Pizza> findByName(String name) {
 		
 		return pizzaRepository.findByNameContaining(name);
+	}
+	
+	public void deleteBook(Pizza pizza) {
+		
+		pizzaRepository.delete(pizza);
 	}
 }

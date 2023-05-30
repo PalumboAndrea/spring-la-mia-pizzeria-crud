@@ -62,9 +62,46 @@ public class MyController {
 	}
 	
 	@PostMapping("/pizze/create")
-	public String storePizzs(@ModelAttribute Pizza pizza) {
+	public String storePizza(@ModelAttribute Pizza pizza) {
 		
 		pizzaService.save(pizza);
+		
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/pizze/update/{id}")
+	public String editPizza(
+			Model model,
+			@PathVariable int id
+		) {
+		
+		Optional<Pizza> optPizza = pizzaService.findById(id);
+		Pizza pizza = optPizza.get();
+		model.addAttribute("pizza", pizza);
+		
+		return "update";
+	}
+	
+	@PostMapping("/pizze/update/{id}")
+	public String updatePizza(
+			@PathVariable int id,
+			@ModelAttribute Pizza pizza
+		) {
+		
+		pizza.setId(id);
+		pizzaService.save(pizza);
+		
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/pizze/delete/{id}")
+	public String deletePizza(
+			@PathVariable int id
+		) {
+		
+		Optional<Pizza> optPizza = pizzaService.findById(id);
+		Pizza pizza = optPizza.get();
+		pizzaService.deleteBook(pizza);
 		
 		return "redirect:/home";
 	}
